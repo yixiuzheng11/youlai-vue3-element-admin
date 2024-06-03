@@ -7,7 +7,7 @@ class UserAPI {
    */
   static getInfo() {
     return request<any, UserInfo>({
-      url: "/api/v1/users/me",
+      url: "/sys/getLoginInfo",
       method: "get",
     });
   }

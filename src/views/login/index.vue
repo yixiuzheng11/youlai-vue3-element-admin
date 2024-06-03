@@ -114,11 +114,16 @@
 </template>
 
 <script setup lang="ts">
-import { useSettingsStore, useUserStore } from "@/store";
+import { usePermissionStore, useSettingsStore, useUserStore } from "@/store";
 import AuthAPI from "@/api/auth";
 import { LoginData } from "@/api/auth/model";
 import type { FormInstance } from "element-plus";
-import { LocationQuery, LocationQueryValue, useRoute } from "vue-router";
+import {
+  LocationQuery,
+  LocationQueryValue,
+  RouteRecordRaw,
+  useRoute,
+} from "vue-router";
 import router from "@/router";
 import defaultSettings from "@/settings";
 import { ThemeEnum } from "@/enums/ThemeEnum";
@@ -203,8 +208,14 @@ function handleLogin() {
             },
             {}
           );
-
-          router.push({ path: redirect, query: otherQueryParams });
+          const permissionStore = usePermissionStore();
+          //获取菜单路由
+          permissionStore.generateRoutes([]).then((accessRoutes) => {
+            accessRoutes.forEach((route: RouteRecordRaw) => {
+              router.addRoute(route);
+            });
+            router.push({ path: redirect, query: otherQueryParams });
+          });
         })
         .catch(() => {
           getCaptcha();

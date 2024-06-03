@@ -15,7 +15,7 @@ const Layout = () => import("@/layout/index.vue");
  * @returns
  */
 const hasPermission = (roles: string[], route: RouteRecordRaw) => {
-  if (route.meta && route.meta.roles) {
+  /*if (route.meta && route.meta.roles) {
     // 角色【超级管理员】拥有所有权限，忽略校验
     if (roles.includes("ROOT")) {
       return true;
@@ -26,7 +26,8 @@ const hasPermission = (roles: string[], route: RouteRecordRaw) => {
       }
     });
   }
-  return false;
+  return false;*/
+  return true;
 };
 
 /**
@@ -85,8 +86,10 @@ export const usePermissionStore = defineStore("permission", () => {
       // 接口获取所有路由
       MenuAPI.getRoutes()
         .then((data) => {
+          console.log("后台返回菜单路由---", data);
           // 过滤有权限的动态路由
           const accessedRoutes = filterAsyncRoutes(data, roles);
+          console.log("过滤有权限的动态路由---", accessedRoutes);
           setRoutes(accessedRoutes);
           resolve(accessedRoutes);
         })

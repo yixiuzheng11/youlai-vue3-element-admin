@@ -7,7 +7,7 @@ class MenuAPI {
    */
   static getRoutes() {
     return request<any, RouteVO[]>({
-      url: "/api/v1/menus/routes",
+      url: "/sys/getMenuRoute",
       method: "get",
     });
   }

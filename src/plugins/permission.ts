@@ -29,6 +29,7 @@ export function setupPermission() {
   router.beforeEach(async (to, from, next) => {
     NProgress.start();
     const hasToken = localStorage.getItem(TOKEN_KEY);
+    console.log("hasToken-----", hasToken);
     if (hasToken) {
       if (to.path === "/login") {
         // 如果已登录，跳转首页
@@ -36,9 +37,8 @@ export function setupPermission() {
         NProgress.done();
       } else {
         const userStore = useUserStore();
-        const hasRoles =
-          userStore.user.roles && userStore.user.roles.length > 0;
-        if (hasRoles) {
+        console.log("userStore.user.userId-----", userStore.user.userId);
+        if (userStore.user.userId) {
           // 未匹配到任何路由，跳转404
           if (to.matched.length === 0) {
             from.name ? next({ name: from.name }) : next("/404");
@@ -48,8 +48,10 @@ export function setupPermission() {
         } else {
           const permissionStore = usePermissionStore();
           try {
-            const { roles } = await userStore.getUserInfo();
-            const accessRoutes = await permissionStore.generateRoutes(roles);
+            //获取用户信息
+            await userStore.getUserInfo();
+            //获取菜单路由
+            const accessRoutes = await permissionStore.generateRoutes([]);
             accessRoutes.forEach((route: RouteRecordRaw) => {
               router.addRoute(route);
             });

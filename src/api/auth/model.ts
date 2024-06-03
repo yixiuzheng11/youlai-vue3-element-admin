@@ -42,6 +42,14 @@ export interface LoginResult {
    * token 类型
    */
   tokenType?: string;
+
+  userId: string;
+
+  username: string;
+
+  nickname: string;
+
+  avavatar: string;
 }
 
 /**

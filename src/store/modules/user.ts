@@ -23,8 +23,11 @@ export const useUserStore = defineStore("user", () => {
     return new Promise<void>((resolve, reject) => {
       AuthAPI.login(loginData)
         .then((data) => {
-          const { tokenType, accessToken } = data;
-          localStorage.setItem(TOKEN_KEY, tokenType + " " + accessToken); // Bearer eyJhbGciOiJIUzI1NiJ9.xxx.xxx
+          //const { tokenType, accessToken } = data;
+          //localStorage.setItem(TOKEN_KEY, tokenType + " " + accessToken); // Bearer eyJhbGciOiJIUzI1NiJ9.xxx.xxx
+          console.log("登录信息----", data);
+          localStorage.setItem(TOKEN_KEY, <string>data.accessToken);
+          Object.assign(user.value, { ...data });
           resolve();
         })
         .catch((error) => {
