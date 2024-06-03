@@ -127,6 +127,7 @@ import {
 import router from "@/router";
 import defaultSettings from "@/settings";
 import { ThemeEnum } from "@/enums/ThemeEnum";
+import { TOKEN_KEY } from "@/enums/CacheEnum";
 
 // Stores
 const userStore = useUserStore();
@@ -181,48 +182,37 @@ const loginRules = computed(() => {
 });
 
 /** 获取验证码 */
-function getCaptcha() {
-  AuthAPI.getCaptcha().then((data) => {
-    loginData.value.captchaKey = data.captchaKey;
-    captchaBase64.value = data.captchaBase64;
-  });
+async function getCaptcha() {
+  const data = await AuthAPI.getCaptcha();
+  loginData.value.captchaKey = data.captchaKey;
+  captchaBase64.value = data.captchaBase64;
 }
 
 /** 登录 */
 const route = useRoute();
 function handleLogin() {
-  loginFormRef.value?.validate((valid: boolean) => {
+  loginFormRef.value?.validate(async (valid: boolean) => {
     if (valid) {
       loading.value = true;
-      userStore
-        .login(loginData.value)
-        .then(() => {
-          const query: LocationQuery = route.query;
-          const redirect = (query.redirect as LocationQueryValue) ?? "/";
-          const otherQueryParams = Object.keys(query).reduce(
-            (acc: any, cur: string) => {
-              if (cur !== "redirect") {
-                acc[cur] = query[cur];
-              }
-              return acc;
-            },
-            {}
-          );
-          const permissionStore = usePermissionStore();
-          //获取菜单路由
-          permissionStore.generateRoutes([]).then((accessRoutes) => {
-            accessRoutes.forEach((route: RouteRecordRaw) => {
-              router.addRoute(route);
-            });
-            router.push({ path: redirect, query: otherQueryParams });
-          });
-        })
-        .catch(() => {
-          getCaptcha();
-        })
-        .finally(() => {
-          loading.value = false;
-        });
+      const userStore = useUserStore();
+      await userStore.login(loginData.value);
+      //生成菜单路由
+      const permissionStore = usePermissionStore();
+      await permissionStore.generateRoutes([]);
+      //跳转
+      const query: LocationQuery = route.query;
+      const redirect = (query.redirect as LocationQueryValue) ?? "/";
+      const otherQueryParams = Object.keys(query).reduce(
+        (acc: any, cur: string) => {
+          if (cur !== "redirect") {
+            acc[cur] = query[cur];
+          }
+          return acc;
+        },
+        {}
+      );
+      router.push({ path: redirect, query: otherQueryParams });
+      loading.value = false;
     }
   });
 }

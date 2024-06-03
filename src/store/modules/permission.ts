@@ -1,5 +1,5 @@
 import { RouteRecordRaw } from "vue-router";
-import { constantRoutes } from "@/router";
+import router, { constantRoutes } from "@/router";
 import { store } from "@/store";
 import MenuAPI from "@/api/menu";
 import { RouteVO } from "@/api/menu/model";
@@ -81,22 +81,19 @@ export const usePermissionStore = defineStore("permission", () => {
    * @param roles 用户角色集合
    * @returns
    */
-  function generateRoutes(roles: string[]) {
-    return new Promise<RouteRecordRaw[]>((resolve, reject) => {
-      // 接口获取所有路由
-      MenuAPI.getRoutes()
-        .then((data) => {
-          console.log("后台返回菜单路由---", data);
-          // 过滤有权限的动态路由
-          const accessedRoutes = filterAsyncRoutes(data, roles);
-          console.log("过滤有权限的动态路由---", accessedRoutes);
-          setRoutes(accessedRoutes);
-          resolve(accessedRoutes);
-        })
-        .catch((error) => {
-          reject(error);
-        });
+  async function generateRoutes(roles: string[]): Promise<RouteRecordRaw[]> {
+    const data = await MenuAPI.getRoutes();
+    //console.log("后台返回菜单---", data);
+    //生成菜单路由
+    const accessedRoutes = filterAsyncRoutes(data.menuList, roles);
+    //菜单数据
+    setRoutes(accessedRoutes);
+    console.log("生成的动态路由---", accessedRoutes);
+    //添加路由
+    accessedRoutes.forEach((route: RouteRecordRaw) => {
+      router.addRoute(route);
     });
+    return accessedRoutes;
   }
 
   /**

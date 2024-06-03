@@ -29,7 +29,6 @@ export function setupPermission() {
   router.beforeEach(async (to, from, next) => {
     NProgress.start();
     const hasToken = localStorage.getItem(TOKEN_KEY);
-    console.log("hasToken-----", hasToken);
     if (hasToken) {
       if (to.path === "/login") {
         // 如果已登录，跳转首页
@@ -37,7 +36,6 @@ export function setupPermission() {
         NProgress.done();
       } else {
         const userStore = useUserStore();
-        console.log("userStore.user.userId-----", userStore.user.userId);
         if (userStore.user.userId) {
           // 未匹配到任何路由，跳转404
           if (to.matched.length === 0) {
