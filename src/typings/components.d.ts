@@ -64,7 +64,7 @@ declare module "vue" {
     ElWatermark: (typeof import("element-plus/es"))["ElWatermark"];
     Form: (typeof import("./../components/PageModal/Form.vue"))["default"];
     FunnelChart: (typeof import("./../views/dashboard/components/FunnelChart.vue"))["default"];
-    GithubCorner: (typeof import("./../components/GithubCorner/index.vue"))["default"];
+    //GithubCorner: (typeof import("./../components/GithubCorner/index.vue"))["default"];
     Hamburger: (typeof import("./../components/Hamburger/index.vue"))["default"];
     IconSelect: (typeof import("./../components/IconSelect/index.vue"))["default"];
     IEpArrowDown: (typeof import("~icons/ep/arrow-down"))["default"];

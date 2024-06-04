@@ -14,7 +14,7 @@ export const enum MenuTypeEnum {
   /**
    * 按钮
    */
-  BUTTON = "BUTTON",
+  BUTTON = "BTN",
   /**
    * 外链
    */

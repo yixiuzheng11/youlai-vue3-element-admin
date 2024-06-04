@@ -100,7 +100,7 @@
           </template>
         </el-table-column>
 
-        <el-table-column label="排序" align="center" width="80" prop="sort" />
+        <el-table-column label="排序" align="center" width="80" prop="sortNo" />
 
         <el-table-column fixed="right" align="center" label="操作" width="220">
           <template #default="scope">
@@ -354,9 +354,9 @@
           </el-radio-group>
         </el-form-item>
 
-        <el-form-item label="排序" prop="sort">
+        <el-form-item label="排序" prop="sortNo">
           <el-input-number
-            v-model="formData.sort"
+            v-model="formData.sortNo"
             style="width: 100px"
             controls-position="right"
             :min="0"
@@ -430,7 +430,7 @@ const initialMenuFormData = ref<MenuForm>({
   id: undefined,
   parentId: 0,
   visible: 1,
-  sort: 1,
+  sortNo: 1,
   type: MenuTypeEnum.MENU, // 默认“菜单”
   alwaysShow: 0,
   keepAlive: 1,
@@ -454,15 +454,11 @@ const rules = reactive({
 const selectedMenuId = ref<number | undefined>();
 
 // 查询
-function handleQuery() {
+async function handleQuery() {
   loading.value = true;
-  MenuAPI.getList(queryParams)
-    .then((data) => {
-      menuTableData.value = data;
-    })
-    .finally(() => {
-      loading.value = false;
-    });
+  const data = await MenuAPI.getList(queryParams);
+  menuTableData.value = data;
+  loading.value = false;
 }
 
 // 重置查询

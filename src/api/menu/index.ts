@@ -19,9 +19,9 @@ class MenuAPI {
    */
   static getList(queryParams: MenuQuery) {
     return request<any, MenuVO[]>({
-      url: "/api/v1/menus",
-      method: "get",
-      params: queryParams,
+      url: "/menu/getList",
+      method: "post",
+      data: queryParams,
     });
   }
 

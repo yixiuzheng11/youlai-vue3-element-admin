@@ -89,7 +89,7 @@ export interface MenuForm {
   /**
    * 排序
    */
-  sort?: number;
+  sortNo?: number;
   /**
    * 组件路径
    */
