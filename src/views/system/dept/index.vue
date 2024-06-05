@@ -67,7 +67,7 @@
           </template>
         </el-table-column>
 
-        <el-table-column prop="sort" label="排序" width="100" />
+        <el-table-column prop="sortNo" label="排序" width="100" />
 
         <el-table-column label="操作" fixed="right" align="left" width="200">
           <template #default="scope">
@@ -126,9 +126,9 @@
         <el-form-item label="部门名称" prop="name">
           <el-input v-model="formData.name" placeholder="请输入部门名称" />
         </el-form-item>
-        <el-form-item label="显示排序" prop="sort">
+        <el-form-item label="显示排序" prop="sortNo">
           <el-input-number
-            v-model="formData.sort"
+            v-model="formData.sortNo"
             controls-position="right"
             style="width: 100px"
             :min="0"
@@ -179,13 +179,13 @@ const deptOptions = ref<OptionType[]>();
 const formData = reactive<DeptForm>({
   status: 1,
   parentId: 0,
-  sort: 1,
+  sortNo: 1,
 });
 
 const rules = reactive({
   parentId: [{ required: true, message: "上级部门不能为空", trigger: "blur" }],
   name: [{ required: true, message: "部门名称不能为空", trigger: "blur" }],
-  sort: [{ required: true, message: "显示排序不能为空", trigger: "blur" }],
+  sortNo: [{ required: true, message: "显示排序不能为空", trigger: "blur" }],
 });
 
 /** 查询 */
@@ -303,7 +303,7 @@ function resetForm() {
   formData.id = undefined;
   formData.parentId = 0;
   formData.status = 1;
-  formData.sort = 1;
+  formData.sortNo = 1;
 }
 
 onMounted(() => {

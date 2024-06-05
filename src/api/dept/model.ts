@@ -33,7 +33,7 @@ export interface DeptVO {
   /**
    * 排序
    */
-  sort?: number;
+  sortNo?: number;
   /**
    * 状态(1:启用；0:禁用)
    */
@@ -63,7 +63,7 @@ export interface DeptForm {
   /**
    * 排序
    */
-  sort?: number;
+  sortNo?: number;
   /**
    * 状态(1:启用；0：禁用)
    */

@@ -9,9 +9,9 @@ class DeptAPI {
    */
   static getList(queryParams?: DeptQuery) {
     return request<any, DeptVO[]>({
-      url: "/api/v1/dept",
-      method: "get",
-      params: queryParams,
+      url: "/dept/getList",
+      method: "post",
+      data: queryParams,
     });
   }
 
