@@ -16,9 +16,9 @@ class DictAPI {
    */
   static getDictTypePage(queryParams: DictTypeQuery) {
     return request<any, DictTypePageResult>({
-      url: "/api/v1/dict/types/page",
-      method: "get",
-      params: queryParams,
+      url: "/dict/getPage",
+      method: "post",
+      data: queryParams,
     });
   }
 
