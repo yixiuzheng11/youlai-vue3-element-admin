@@ -6,7 +6,7 @@ class MenuAPI {
    * 获取路由列表
    */
   static getRoutes() {
-    return request<any, RouteVO[]>({
+    return request<any, RouteVO>({
       url: "/sys/getMenuRoute",
       method: "get",
     });

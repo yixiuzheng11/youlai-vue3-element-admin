@@ -2,7 +2,7 @@ import { RouteRecordRaw } from "vue-router";
 import router, { constantRoutes } from "@/router";
 import { store } from "@/store";
 import MenuAPI from "@/api/menu";
-import { RouteVO } from "@/api/menu/model";
+import { MenuRouteVo } from "@/api/menu/model";
 
 const modules = import.meta.glob("../../views/**/**.vue");
 const Layout = () => import("@/layout/index.vue");
@@ -37,7 +37,7 @@ const hasPermission = (roles: string[], route: RouteRecordRaw) => {
  * @param roles 用户角色集合
  * @returns 返回用户有权限的动态路由
  */
-const filterAsyncRoutes = (routes: RouteVO[], roles: string[]) => {
+const filterAsyncRoutes = (routes: MenuRouteVo[], roles: string[]) => {
   const asyncRoutes: RouteRecordRaw[] = [];
   routes.forEach((route) => {
     const tmpRoute = { ...route } as RouteRecordRaw; // 深拷贝 route 对象 避免污染

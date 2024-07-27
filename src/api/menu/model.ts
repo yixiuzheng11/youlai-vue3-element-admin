@@ -130,14 +130,18 @@ interface KeyValue {
   value: string;
 }
 
+export interface RouteVO {
+  menuList: MenuRouteVo[];
+  permList: string[];
+}
 /**
  * RouteVO，路由对象
  */
-export interface RouteVO {
+export interface MenuRouteVo {
   /**
    * 子路由列表
    */
-  children: RouteVO[];
+  children: MenuRouteVo[];
   /**
    * 组件路径
    */
